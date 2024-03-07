@@ -1,12 +1,10 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
 const fs = require("fs");
-
-app.listen(PORT);
 
 require("dotenv").config();
 
+const PORT = process.env.PORT;
 const NODE_ENV = process.env.NODE_ENV;
 const API_KEY = process.env.API_KEY;
 const API_URL = process.env.API_URL;
@@ -36,6 +34,9 @@ app.get("*", async (req, res) => {
     else res.status(200).json(resource);
   });
 });
+
+app.listen(PORT);
+console.log("Listening on port", PORT);
 
 // Get a resource from the API
 async function getResource(path) {
