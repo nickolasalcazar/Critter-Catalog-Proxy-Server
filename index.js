@@ -56,6 +56,7 @@ async function getResource(path) {
         JSON.stringify(data, null, 4),
         (error) => {
           if (error) console.error("Error writing to file:", error);
+          else console.log("Successfully wrote to api_response.json");
         }
       );
       return data;
