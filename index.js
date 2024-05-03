@@ -13,16 +13,19 @@ const OUTPUT_FILE = "api_response.json";
 const furniture = require("./furniture_minified.json");
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Content-Type", "application/json");
+  if (NODE_ENV === "dev") {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.header("Content-Type", "application/json");
+  }
   next();
 });
 
 const possiblePaths = ["villagers", "furniture", "fish", "bugs", "art"];
+
 app.get("*", async (req, res) => {
   const path = req.path.substring(1);
   const pathIsValid = possiblePaths.includes(path);
@@ -41,10 +44,12 @@ console.log("Listening on port", PORT);
 
 // Get a resource from the API
 async function getResource(path) {
+  // If furniture resource is requested, just return the
+  // furniture that is stored in the (cached) JSON file
   if (path === "furniture") return furniture;
 
   const resource = path === "villagers" ? "villagers" : `nh/${path}`;
-  console.log("Fetching resource:", API_URL + resource);
+  if (NODE_ENV === "dev") console.log("Fetching resource:", API_URL + resource);
 
   try {
     const response = await fetch(API_URL + resource, {
