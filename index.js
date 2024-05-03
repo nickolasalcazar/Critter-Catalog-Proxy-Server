@@ -8,16 +8,14 @@ const PORT = process.env.PORT;
 const NODE_ENV = process.env.NODE_ENV;
 const API_KEY = process.env.API_KEY;
 const API_URL = process.env.API_URL;
+const ORIGIN = process.env.ORIGIN;
 const OUTPUT_FILE = "api_response.json";
 
 const furniture = require("./furniture_minified.json");
 
 app.use((req, res, next) => {
   res.header("Content-Type", "application/json");
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://critter-catalog.onrender.com/"
-  );
+  res.header("Access-Control-Allow-Origin", ORIGIN);
   if (NODE_ENV === "dev") {
     res.header(
       "Access-Control-Allow-Headers",
