@@ -16,13 +16,10 @@ const furniture = require("./furniture_minified.json");
 app.use((req, res, next) => {
   res.header("Content-Type", "application/json");
   res.header("Access-Control-Allow-Origin", ORIGIN);
-  if (NODE_ENV === "dev") {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-  }
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
 
